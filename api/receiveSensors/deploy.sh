@@ -1,0 +1,1 @@
+gcloud functions deploy receiveSensors --memory 128 --env-vars-file .env.yaml --region europe-west2 --runtime nodejs8 --trigger-http --entry-point app
