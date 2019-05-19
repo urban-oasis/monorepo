@@ -30,45 +30,56 @@ async function getData(files) {
 app.get('/', [
     header('authorization').exists(),
     query('farm').exists(),
-    query('rack').exists(),
-    query('fromUtc').exists(),
-    query('toUtc').exists()
+    query('rack').exists()
 ], async (req, res, next) => {
     if (req.headers.authorization !== process.env.AUTH_TOKEN || !validationResult(req).isEmpty()) {
         res.status(401).send()
         return next()
     }
     console.log(req.query)
-    const fromUtc = datetime.create(req.query.fromUtc)._now
-    const toUtc = datetime.create(req.query.toUtc)._now
-    if (fromUtc.toString() === 'Invalid Date' || toUtc.toString() === 'Invalid Date') {
-        res.status(400).send('Invalid date format')
-        return next()
-    }
 
-    if (fromUtc.getMonth() === toUtc.getMonth() && fromUtc.getUTCDate() === toUtc.getUTCDate()) {
+    if ('fromUtc' in req.query && 'toUtc' in req.query) {
+        const fromUtc = datetime.create(req.query.fromUtc)._now
+        const toUtc = datetime.create(req.query.toUtc)._now
+        if (fromUtc.toString() === 'Invalid Date' || toUtc.toString() === 'Invalid Date') {
+            res.status(400).send('Invalid date format')
+            return next()
+        }
+        
+        if (fromUtc.getMonth() === toUtc.getMonth() && fromUtc.getUTCDate() === toUtc.getUTCDate()) {
+            var files = []
+            var options = {
+                prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${toUtc.getMonth() + 1}/day=${toUtc.getUTCDate()}/`
+            }
+            var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
+            for (var i = 0; i < filesInDay.length; i++) {
+                files.push(filesInDay[i].name)
+            }
+        } else {
+            var files = []
+            for (var month = fromUtc.getMonth(); month <= toUtc.getMonth(); month++) {
+                for (var day = fromUtc.getUTCDate(); day <= toUtc.getUTCDate(); day++) {
+                    var options = {
+                        prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${month + 1}/day=${day}/`
+                    }
+                    var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
+                    for (var i = 0; i < filesInDay.length; i++) {
+                        files.push(filesInDay[i].name)
+                    }
+                }
+            }
+        }
+    } else {
         var files = []
         var options = {
-            prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${toUtc.getMonth() + 1}/day=${toUtc.getUTCDate()}/`
+            prefix: `farm=${req.query.farm}/rack=${req.query.rack}/`
         }
         var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
         for (var i = 0; i < filesInDay.length; i++) {
             files.push(filesInDay[i].name)
         }
-    } else {
-        var files = []
-        for (var month = fromUtc.getMonth(); month <= toUtc.getMonth(); month++) {
-            for (var day = fromUtc.getUTCDate(); day <= toUtc.getUTCDate(); day++) {
-                var options = {
-                    prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${month + 1}/day=${day}/`
-                }
-                var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
-                for (var i = 0; i < filesInDay.length; i++) {
-                    files.push(filesInDay[i].name)
-                }
-            }
-        }
     }
+    
     console.log(files)
     const data = await getData(files)
     res.status(200).send(data)
