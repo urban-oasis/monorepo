@@ -76,7 +76,9 @@ app.get('/', [
         }
         var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
         for (var i = 0; i < filesInDay.length; i++) {
-            files.push(filesInDay[i].name)
+            if (filesInDay[i].name.includes('json')) {
+                files.push(filesInDay[i].name)
+            }
         }
     }
     
