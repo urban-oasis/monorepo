@@ -8,6 +8,9 @@ import { FarmsList } from './farms'
 import { RacksList } from './racks'
 import { SensorsOverview } from './sensors'
 
+
+
+
 const styles = theme => ({
   root: {
     display: 'flex',
@@ -18,6 +21,7 @@ const styles = theme => ({
 
 class App extends Component {
   render () {
+    window.localStorage.setItem('access_token', 'OEU@3o-4234JE-32Ujeo?@!');
     const { classes } = this.props
     return (
       <Router>

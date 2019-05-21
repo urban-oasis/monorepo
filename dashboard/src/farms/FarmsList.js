@@ -9,8 +9,8 @@ import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MoreVertIcon from '@material-ui/icons/MoreVert'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
+import {Menu,MenuItem, CircularProgress, Grid} from '@material-ui/core/'
+
 import withStyles from '@material-ui/core/styles/withStyles'
 
 import api from '../api'
@@ -19,7 +19,15 @@ const styles = theme => ({
   container: {
     maxWidth: 1200,
     width: '100%',
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing.unit * 3,
+  },
+  root: {
+    flexGrow: 1,
+    padding: '128px 40px',
+  },
+  progress:{
+    alignItems: 'center',
+    justifyContent: 'center',
   }
 })
 
@@ -47,12 +55,23 @@ class FarmsList extends Component {
 
   render () {
     const { history, classes } = this.props
-    const { anchorEl } = this.state
+    const { anchorEl,farms } = this.state
 
     return (
-      <main className={classes.container}>
-        <Typography variant='h4' gutterBottom color='inherit'>Payments</Typography>
-        <Paper>
+      <main className={classes.root}>
+        <Grid container align='center' spacing={24}>
+        <Grid item item xs={12}>
+        <Typography
+        variant='h4' gutterBottom color='secondary'
+        >Farms</Typography>
+        </Grid>      
+        {(farms.length==0)?
+        <Grid item xs={12} md={6}>
+                <CircularProgress className={classes.progress}/>
+         </Grid>
+         :
+        (<Grid item xs={12}>
+          <Paper>
           <Table>
             <TableHead>
               <TableRow>
@@ -76,7 +95,11 @@ class FarmsList extends Component {
               )}
             </TableBody>
           </Table>
-        </Paper>
+          </Paper>
+          </Grid>)
+          }
+        </Grid>
+
       </main>
     )
   }
