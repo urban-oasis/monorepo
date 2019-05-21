@@ -4,7 +4,8 @@ import { Route, Redirect } from 'react-router-dom'
 import AppBar from '../components/AppBar'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const accessToken = window.localStorage.getItem('accessToken')
+  //window.localStorage.access_token 
+  const accessToken  = window.localStorage.getItem('access_token')
   return (
     <Route {...rest} render={(props) => (
       accessToken

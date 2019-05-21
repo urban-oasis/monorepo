@@ -5,7 +5,9 @@ const Timeout = TimeoutMiddleware(5000)
 
 const AuthMiddleware = () => ({
   request (request) {
-    const accessToken = window.localStorage.getItem('accessToken')
+    const accessToken = window.localStorage.getItem('access_token')
+    console.log('get Accesstoken')
+    console.log(accessToken)
     if (!accessToken) {
       return request
     }

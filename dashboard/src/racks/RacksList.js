@@ -8,6 +8,8 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
+import {Grid, CircularProgress} from '@material-ui/core/'
+
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import withStyles from '@material-ui/core/styles/withStyles'
 
@@ -18,7 +20,11 @@ const styles = theme => ({
     maxWidth: 1200,
     width: '100%',
     padding: theme.spacing.unit * 3
-  }
+  },
+  root: {
+    flexGrow: 1,
+    padding: '128px 40px',
+  },
 })
 
 class RacksList extends Component {
@@ -44,12 +50,23 @@ class RacksList extends Component {
 
   render () {
     const { history, classes } = this.props
-    const { anchorEl } = this.state
+    const { anchorEl,racks} = this.state
 
     return (
-      <main className={classes.container}>
-        <Typography variant='h4' gutterBottom color='inherit'>Racks</Typography>
-        <Paper>
+      <main className={classes.root}>
+        <Grid container align='center' spacing={24}>
+        <Grid item item xs={12}>
+        <Typography
+        variant='h4' gutterBottom color='secondary'
+        >Racks</Typography>
+        </Grid>
+        {(racks.length==0)?
+        <Grid item xs={12} md={6}>
+                <CircularProgress className={classes.progress}/>
+         </Grid>
+         :
+       (<Grid item xs={12} >
+       <Paper>
           <Table>
             <TableHead>
               <TableRow>
@@ -71,27 +88,31 @@ class RacksList extends Component {
                 <TableRow
                   key={rack.id}
                   hover
-                  onClick={() => history.push(`/racks/${rack.id}`)}
+                  onClick={() => history.push({
+                    pathname:`/racks/${rack.id}`,
+                    state: {rack: rack}})}
                   style={{ cursor: 'pointer' }}
                 >
-                  <TableCell>{rack.id}</TableCell>
-                  <TableCell>{rack.growing}</TableCell>
-                  <TableCell>{rack.temp_air}</TableCell>
-                  <TableCell>{rack.temp_water}</TableCell>
-                  <TableCell>{rack.co2}</TableCell>
-                  <TableCell>{rack.ph}</TableCell>
-                  <TableCell>{rack.ec}</TableCell>
-                  <TableCell>{rack.humidity}</TableCell>
-                  <TableCell>{rack.light}</TableCell>
+                {[rack.id,
+                   rack.growing,
+                    rack.temp_air,
+                    rack.temp_water,
+                    rack.co2,
+                    rack.ph,
+                    rack.ec,
+                    rack.humidity,
+                    rack.light
+                    ].map(cell=><TableCell>{cell}</TableCell>)}
                   <TableCell>
                     {format(new Date(rack.timestamp), 'YYYY-MM-DDTHH:mm:ssZ')}
                   </TableCell>
-                  <TableCell />
                 </TableRow>
               )}
             </TableBody>
           </Table>
-        </Paper>
+        </Paper></Grid>)}
+        </Grid>
+
       </main>
     )
   }

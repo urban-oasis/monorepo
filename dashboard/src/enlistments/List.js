@@ -54,7 +54,7 @@ class EnlistmentsList extends Component {
 
     return (
       <main className={classes.container}>
-        <Typography variant='h6' color='inherit'>Enlistments</Typography>
+        <Typography variant='h6' color='secondary'>Enlistments</Typography>
         <Paper>
           <Table>
             <TableHead>
