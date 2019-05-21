@@ -20,7 +20,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
-
+import {PRIMARY} from '../constants/Colors'
 import api from '../api'
 
 const drawerWidth = 240;
@@ -56,6 +56,7 @@ const styles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    // background: PRIMARY,
   },
   drawerHeader: {
     display: 'flex',

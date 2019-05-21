@@ -45,12 +45,6 @@ const styles = theme => ({
     //maxWidth: 560,
   },
 
-  button:{
-    margin: theme.spacing.unit,
-    position: 'absolute',
-    top: 24,
-    right: 24,
-  }
 })
 
 class SensorsOverview extends Component {

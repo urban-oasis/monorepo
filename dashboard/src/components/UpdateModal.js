@@ -46,6 +46,10 @@ class SimpleUpdateModal extends Component{
         this.setState({ open: false });
       };
     
+      updateSensorValue(){
+          
+
+      }
    
     
       handleChange = name => event => {
@@ -55,7 +59,7 @@ class SimpleUpdateModal extends Component{
     render(){
     const {classes, kpi} = this.props;
     return(
-        <div>
+        <>
         <IconButton color="secondary" className={classes.button}
         onClick={this.handleOpen}>
         <CloudUploadIcon />
@@ -67,30 +71,30 @@ class SimpleUpdateModal extends Component{
           onClose={this.handleClose}
         >
           <div style={getModalStyle()} className={classes.paper}>
-            <Typography variant="h6" id="modal-title">
+            <Typography variant="h6" id="modal-title" color="secondary">
                Set {kpi}
             </Typography>
             <form className={classes.container} noValidate autoComplete="off">
-            <TextField
-          id="standard-number"
-          label="Number"
-          value={this.state.age}
-          onChange={this.handleChange('value')}
-          type="number"
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-          margin="normal"
-        />
-        </form>
+                <TextField
+                    id="standard-number"
+                    label="Number"
+                    value={this.state.age}
+                    onChange={this.handleChange('value')}
+                    type="number"
+                    className={classes.textField}
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                    margin="normal"/>
+            </form>
             <Button
-            onClick={()=> alert(kpi +"send to baceknd" + this.state.value)}
-            >Submit</Button>
-            
+                onClick={()=> alert(kpi +" send to backend " + this.state.value)}
+                color='secondary'>
+                Submit
+            </Button>
           </div>
         </Modal>
-      </div>
+      </>
     )
     }
 }
