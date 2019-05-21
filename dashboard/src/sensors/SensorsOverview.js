@@ -15,7 +15,7 @@ CircularProgress,
 IconButton} from '@material-ui/core/';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import Plot from 'react-plotly.js';
-
+import UpdateModal from '../components/UpdateModal'
 import api from '../api'
 import { Line } from 'react-chartjs-2'
 import {ALL_KPIS, DISPLAY_KPIS, KPI_TIMESTAMP} from '../constants/KPIS'
@@ -98,10 +98,11 @@ createPlot=(obj) =>{
   return (
     <>
     <Plot data={plotData} layout={layout} config={{displayModeBar: false}}/>
-    <IconButton color="secondary" className={classes.button}
+    {/* <IconButton color="secondary" className={classes.button}
       onClick={()=>alert(kpi)}>
        <CloudUploadIcon />
-    </IconButton>
+    </IconButton> */}
+    <UpdateModal kpi={TITLES[kpi]}></UpdateModal>
     </>
     )
 }
@@ -142,6 +143,7 @@ createPlots=()=>{
 
     return (
       <div className={classes.root}>
+      <UpdateModal></UpdateModal>
       <Grid container align='center' spacing={24}>
       {(sensors.length>0)?
       <>

@@ -63,7 +63,7 @@ class FarmsList extends Component {
         <Grid item item xs={12}>
         <Typography
         variant='h4' gutterBottom color='secondary'
-        >Farms</Typography>
+        >FARMS</Typography>
         </Grid>      
         {(farms.length==0)?
         <Grid item xs={12} md={6}>
