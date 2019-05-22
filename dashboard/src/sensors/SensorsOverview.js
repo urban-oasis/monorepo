@@ -19,6 +19,7 @@ import UpdateModal from '../components/UpdateModal'
 import api from '../api'
 import { Line } from 'react-chartjs-2'
 import {ALL_KPIS, DISPLAY_KPIS, KPI_TIMESTAMP} from '../constants/KPIS'
+import {PRIMARY, SECONDARY} from '../constants/Colors'
 
 const TITLES = {co2: "CO2",
   ec: "EC",
@@ -55,12 +56,8 @@ class SensorsOverview extends Component {
 
   async componentDidMount () {
     const urlSplit = window.location.href.split('/')
-    console.log(urlSplit)
     const { history} = this.props
-    console.log(this.props)
     const rackData = history.location.state.data
-    console.log("component did mount, rack data")
-    console.log(rackData)
     const response = await api.Sensors.all({
       farm: rackData.farm_id,
       rack: rackData.id,
@@ -73,8 +70,7 @@ class SensorsOverview extends Component {
     growing: rackData.growing }
     ALL_KPIS.map(kpi => formData[kpi] = parsedResponse.reduce((tot, curr) => tot.concat(curr[kpi]),[]))
     this.setState({formData: formData})
-    console.log("All kpis")
-    console.log(ALL_KPIS)
+
   }
 
 createPlot=(obj) =>{
@@ -86,7 +82,9 @@ createPlot=(obj) =>{
     {
       x: timestamps,
       y: data,
-      type: 'scatter'
+      type: 'scatter',
+      line: {color: PRIMARY}
+
     },
 
   ]
