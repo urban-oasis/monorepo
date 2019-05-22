@@ -80,7 +80,6 @@ class RacksList extends Component {
                 <TableCell>Humidity</TableCell>
                 <TableCell>Light</TableCell>
                 <TableCell>Last update</TableCell>
-                <TableCell />
               </TableRow>
             </TableHead>
             <TableBody>
