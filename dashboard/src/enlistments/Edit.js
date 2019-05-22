@@ -27,6 +27,7 @@ const styles = theme => ({
   }
 })
 
+
 class EnlistmentsEdit extends Component {
   state = {
     enlistment: null,

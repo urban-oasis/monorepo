@@ -6,9 +6,6 @@ export const KPI_PH = 'ph'
 export const KPI_TEMP_AIR = 'temp_air'
 export const KPI_TEMP_WATER = 'temp_water'
 
-
-
-
 export const DISPLAY_KPIS = [
     KPI_CO2,
     KPI_EC,
@@ -16,5 +13,4 @@ export const DISPLAY_KPIS = [
     KPI_HUMIDITY,
     KPI_TEMP_AIR,
     KPI_TEMP_WATER]
-
 export const ALL_KPIS = [...DISPLAY_KPIS, KPI_TIMESTAMP]

@@ -12,8 +12,8 @@ import {Grid, CircularProgress} from '@material-ui/core/'
 
 import MoreVertIcon from '@material-ui/icons/MoreVert'
 import withStyles from '@material-ui/core/styles/withStyles'
-
 import api from '../api'
+import CustomTable from '../components/CustomTable'
 
 const styles = theme => ({
   container: {
@@ -26,6 +26,9 @@ const styles = theme => ({
     padding: '128px 40px',
   },
 })
+const HEADERS = ['Id','Growing','Air temp','Water temp','CO2','Ph','EC','Humidity','Light','Last update']
+const ATTRIBUTES = ['id','growing','temp_air','temp_water','co2','ph','ec','humidity','light','timestamp']
+
 
 class RacksList extends Component {
   state = {
@@ -66,50 +69,11 @@ class RacksList extends Component {
          </Grid>
          :
        (<Grid item xs={12} >
-       <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Id</TableCell>
-                <TableCell>Growing</TableCell>
-                <TableCell>Air temp</TableCell>
-                <TableCell>Water temp</TableCell>
-                <TableCell>CO2</TableCell>
-                <TableCell>Ph</TableCell>
-                <TableCell>EC</TableCell>
-                <TableCell>Humidity</TableCell>
-                <TableCell>Light</TableCell>
-                <TableCell>Last update</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.racks.map(rack =>
-                <TableRow
-                  key={rack.id}
-                  hover
-                  onClick={() => history.push({
-                    pathname:`/racks/${rack.id}`,
-                    state: {rack: rack}})}
-                  style={{ cursor: 'pointer' }}
-                >
-                {[rack.id,
-                   rack.growing,
-                    rack.temp_air,
-                    rack.temp_water,
-                    rack.co2,
-                    rack.ph,
-                    rack.ec,
-                    rack.humidity,
-                    rack.light
-                    ].map(cell=><TableCell>{cell}</TableCell>)}
-                  <TableCell>
-                    {format(new Date(rack.timestamp), 'YYYY-MM-DDTHH:mm:ssZ')}
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </Paper></Grid>)}
+       <CustomTable
+         data={racks} headers={HEADERS} attributes={ATTRIBUTES}
+         funcConfig ={{path: 'racks', sendState: true, history:history}}>
+       </CustomTable>
+       </Grid>)}
         </Grid>
 
       </main>

@@ -1,19 +1,11 @@
 import React, { Component } from 'react'
-import { format } from 'date-fns'
-import Paper from '@material-ui/core/Paper'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import MoreVertIcon from '@material-ui/icons/MoreVert'
 import {Menu,MenuItem, CircularProgress, Grid} from '@material-ui/core/'
-
 import withStyles from '@material-ui/core/styles/withStyles'
-
+import CustomTableCell from '../components/CustomTableCell'
 import api from '../api'
+import CustomTable from '../components/CustomTable'
+
 
 const styles = theme => ({
   container: {
@@ -30,6 +22,8 @@ const styles = theme => ({
     justifyContent: 'center',
   }
 })
+const HEADERS = ['Id', 'Location']
+const ATTRIBUTES = ['id', 'location']
 
 class FarmsList extends Component {
   state = {
@@ -71,31 +65,10 @@ class FarmsList extends Component {
          </Grid>
          :
         (<Grid item xs={12}>
-          <Paper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Id</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {this.state.farms.map(farm =>
-                <TableRow
-                  key={farm.id}
-                  hover
-                  onClick={() => history.push(`/farms/${farm.id}`)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <TableCell>{farm.id}</TableCell>
-                  <TableCell>{farm.location}</TableCell>
-                  <TableCell />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-          </Paper>
+          <CustomTable
+            data={farms} headers={HEADERS} attributes={ATTRIBUTES}
+            funcConfig ={{path: 'farms', history:history}}>
+          </CustomTable>
           </Grid>)
           }
         </Grid>

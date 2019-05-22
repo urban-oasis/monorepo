@@ -57,7 +57,8 @@ class SensorsOverview extends Component {
     const urlSplit = window.location.href.split('/')
     console.log(urlSplit)
     const { history} = this.props
-    const rackData = history.location.state.rack
+    console.log(this.props)
+    const rackData = history.location.state.data
     console.log("component did mount, rack data")
     console.log(rackData)
     const response = await api.Sensors.all({
@@ -144,7 +145,7 @@ createPlots=()=>{
       <Grid item xs={12}>
        <Typography align='center' variant='h4' gutterBottom color='secondary'>{"Farm: "+formData.farmId + " Rack: "+ formData.rackId +" Growing: "+formData.growing }</Typography>
        </Grid>
-       {plots})</>
+       {plots}</>
       :
       <Grid item xs={12}>
         <CircularProgress />
