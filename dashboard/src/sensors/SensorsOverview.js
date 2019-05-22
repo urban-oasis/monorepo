@@ -11,7 +11,8 @@ import {Paper,
   Grid,
   GridListTile,
   GridList,
-CircularProgress,
+  Card,
+  CircularProgress,
 IconButton} from '@material-ui/core/';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
 import Plot from 'react-plotly.js';
@@ -57,7 +58,12 @@ class SensorsOverview extends Component {
   async componentDidMount () {
     const urlSplit = window.location.href.split('/')
     const { history} = this.props
-    const rackData = history.location.state.data
+    console.log(history)
+    const historyLocation = history.location
+    if(!historyLocation.state) 
+      history.push('/')
+    else{
+    const rackData = historyLocation.state.data
     const response = await api.Sensors.all({
       farm: rackData.farm_id,
       rack: rackData.id,
@@ -71,7 +77,7 @@ class SensorsOverview extends Component {
     ALL_KPIS.map(kpi => formData[kpi] = parsedResponse.reduce((tot, curr) => tot.concat(curr[kpi]),[]))
     this.setState({formData: formData})
 
-  }
+  }}
 
 createPlot=(obj) =>{
   const {growing, timestamps,data,kpi} = obj
@@ -91,10 +97,6 @@ createPlot=(obj) =>{
   return (
     <>
     <Plot data={plotData} layout={layout} config={{displayModeBar: false}}/>
-    {/* <IconButton color="secondary" className={classes.button}
-      onClick={()=>alert(kpi)}>
-       <CloudUploadIcon />
-    </IconButton> */}
     <UpdateModal kpi={TITLES[kpi]}></UpdateModal>
     </>
     )
@@ -141,7 +143,7 @@ createPlots=()=>{
       {(sensors.length>0)?
       <>
       <Grid item xs={12}>
-       <Typography align='center' variant='h4' gutterBottom color='secondary'>{"Farm: "+formData.farmId + " Rack: "+ formData.rackId +" Growing: "+formData.growing }</Typography>
+         <Typography align='center' variant='h4' gutterBottom color='secondary'>{"Farm: "+formData.farmId + " Rack: "+ formData.rackId +" Growing: "+formData.growing }</Typography>
        </Grid>
        {plots}</>
       :

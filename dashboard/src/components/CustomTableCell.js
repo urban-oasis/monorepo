@@ -1,12 +1,11 @@
 import withStyles from '@material-ui/core/styles/withStyles'
 import {PRIMARY, SECONDARY} from '../constants/Colors'
 import TableCell from '@material-ui/core/TableCell'
-import { format } from 'date-fns'
 
 const CustomTableCell = withStyles(theme =>({
     head:{
-      backgroundColor: PRIMARY,
-      color: SECONDARY,
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.secondary.main,
     }
   }))(TableCell)
 
