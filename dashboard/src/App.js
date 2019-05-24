@@ -7,6 +7,7 @@ import { ProtectedRoute, Login } from './auth'
 import { FarmsList } from './farms'
 import { RacksList } from './racks'
 import { SensorsOverview } from './sensors'
+import AddUser from './components/AddUser'
 
 
 
@@ -31,6 +32,7 @@ class App extends Component {
             <ProtectedRoute path='/' exact component={FarmsList} />
             <ProtectedRoute path='/farms/:farm_id' component={RacksList} />
             <ProtectedRoute path='/racks/:rack_id' exact component={SensorsOverview} />
+            <ProtectedRoute path='/users' exact component={AddUser} />
             <Route path='/login' component={Login} />
           </Switch>
         </div>

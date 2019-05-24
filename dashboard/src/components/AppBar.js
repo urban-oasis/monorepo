@@ -17,6 +17,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
+import {VerifiedUser } from '@material-ui/icons/';
+
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
@@ -161,6 +163,16 @@ class ButtonAppBar extends Component {
                 onClick={() => {
                   this.handleDrawerClose()
                   history.push('/enlistments')
+                }}
+                />
+            </ListItem>
+            <ListItem button key={'Users'}>
+              <ListItemIcon> <VerifiedUser/> </ListItemIcon>
+              <ListItemText 
+                primary={'Users'}
+                onClick={() => {
+                  this.handleDrawerClose()
+                  history.push('/users')
                 }}
                 />
             </ListItem>
