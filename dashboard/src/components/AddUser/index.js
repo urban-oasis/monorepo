@@ -7,7 +7,7 @@ import withStyles from '@material-ui/core/styles/withStyles'
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: '128px 40px',
+    padding: '16px 40px',
   },
   logo: {
     backgroundImage: `url(${require('../../assets/images/logo.png')})`,
@@ -25,13 +25,13 @@ const mapStateToProps = state => {
 
 //const ConnectedAddUser = ({classes,dispatch})=>{
   
- const AddUser =({classes,dispatch}) =>{ 
+ const AddUser =({classes,users,dispatch}) =>{ 
   console.log("eeyooo")
+  console.log(users)
 return (
   <div className={classes.root}>
   {/* <Card className={classes.card}> */}
   <div className={classes.logo}></div>
-  
   {/* </Card> */}
   </div>
 )
@@ -68,4 +68,5 @@ return (
 
 //const  AddUser = connect(mapStateToProps)(ConnectedAddUser)
 
-  export default connect(mapStateToProps)(withStyles(styles)(AddUser));
+export default connect(mapStateToProps)(withStyles(styles)(AddUser));
+  //export default withStyles(styles)(AddUser);

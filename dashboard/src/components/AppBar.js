@@ -24,7 +24,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import MoneyIcon from '@material-ui/icons/AttachMoney'
 import {PRIMARY} from '../constants/Colors'
 import api from '../api'
-
+import SideMenu from '../components/SideMenu'
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -126,7 +126,18 @@ class ButtonAppBar extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer
+      </div>
+    );
+  }
+}
+
+ButtonAppBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+export default withRouter(withStyles(styles)(ButtonAppBar))
+{/* <Drawer
           className={classes.drawer}
           variant="persistent"
           anchor="left"
@@ -177,15 +188,4 @@ class ButtonAppBar extends Component {
                 />
             </ListItem>
           </List>
-        </Drawer>
-      </div>
-    );
-  }
-}
-
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
-
-export default withRouter(withStyles(styles)(ButtonAppBar))
+        </Drawer> */}

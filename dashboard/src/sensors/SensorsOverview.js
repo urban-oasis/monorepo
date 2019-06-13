@@ -1,26 +1,20 @@
 import React, { Component } from 'react'
 import { format } from 'date-fns'
 import withStyles from '@material-ui/core/styles/withStyles'
-import {Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
+import {
+  Paper,
   Typography,
   Grid,
-  GridListTile,
-  GridList,
   Card,
   CircularProgress,
-IconButton} from '@material-ui/core/';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+} from '@material-ui/core/';
 import Plot from 'react-plotly.js';
 import UpdateModal from '../components/UpdateModal'
 import api from '../api'
-import { Line } from 'react-chartjs-2'
 import {ALL_KPIS, DISPLAY_KPIS, KPI_TIMESTAMP} from '../constants/KPIS'
 import {PRIMARY, SECONDARY} from '../constants/Colors'
+import Switcher from '../components/Switcher'
+
 
 const TITLES = {co2: "CO2",
   ec: "EC",
@@ -33,7 +27,7 @@ const TITLES = {co2: "CO2",
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: '128px 40px',
+    padding: '16px 40px',
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -138,20 +132,50 @@ createPlots=()=>{
 
     return (
       <div className={classes.root}>
-      <UpdateModal></UpdateModal>
       <Grid container align='center' spacing={24}>
       {(sensors.length>0)?
       <>
       <Grid item xs={12}>
-         <Typography align='center' variant='h4' gutterBottom color='secondary'>{"Farm: "+formData.farmId + " Rack: "+ formData.rackId +" Growing: "+formData.growing }</Typography>
+      <Grid container align='center' spacing={24}>
+      <Grid item xs={4}>
+      <Card>
+
+      <Typography align='center' variant='h6' gutterBottom color='secondary'>
+         {`Farm: ${formData.farmId}`}</Typography>
+         </Card>
+
+         </Grid>
+
+         <Grid item xs={4}>
+        <Card>
+      <Typography align='center' variant='h6' gutterBottom color='secondary'>
+         {`Module: ${formData.rackId}`}</Typography>
+         </Card>
+         </Grid>
+         <Grid item xs={4}>
+         <Card>
+      <Typography align='center' variant='h6' gutterBottom color='secondary'>
+         {`Growing: ${formData.growing}`}</Typography>
+         </Card>
+
+         </Grid>
+        </Grid>
        </Grid>
-       {plots}</>
+       {plots}
+      <Grid item xs={12} align='center'>
+         <Card>
+       <Switcher/>
+       </Card>
+       </Grid>
+
+       </>
       :
       <Grid item xs={12}>
         <CircularProgress />
       </Grid>
       }
       </Grid>
+
     </div>
     )
   }

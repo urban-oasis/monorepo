@@ -16,7 +16,7 @@ function visibilityFilter(state = SHOW_ALL, action) {
   }
 }
 const initialState={
-  users: []
+  users: [{name: "kalle"}, {name: "idriss"}, {name: "jfro to the flow"}]
 }
 
 function users(state = initialState, action) {

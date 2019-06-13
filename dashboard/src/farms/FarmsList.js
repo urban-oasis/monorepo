@@ -15,7 +15,7 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-    padding: '128px 40px',
+    padding: '16px 40px',
   },
   progress:{
     alignItems: 'center',
@@ -59,8 +59,8 @@ class FarmsList extends Component {
         variant='h4' gutterBottom color='secondary'
         >Farms</Typography>
         </Grid>      
-        {(farms.length==0)?
-        <Grid item xs={12} md={6}>
+        {(farms.length === 0)?
+        <Grid item xs={12}>
                 <CircularProgress className={classes.progress}/>
          </Grid>
          :

@@ -15,7 +15,7 @@ const styles = theme => ({
   },
   root: {
     flexGrow: 1,
-    padding: '128px 40px',
+    padding: '16px 40px',
   },
 })
 const HEADERS = ['Id','Growing','Air temp','Water temp','CO2','Ph','EC','Humidity','Light','Last update']
@@ -50,13 +50,13 @@ class RacksList extends Component {
     return (
       <main className={classes.root}>
         <Grid container align='center' spacing={24}>
-        <Grid item item xs={12}>
+        <Grid item xs={12}>
         <Typography
         variant='h4' gutterBottom color='secondary'
-        >Racks</Typography>
+        >Modules</Typography>
         </Grid>
-        {(racks.length==0)?
-        <Grid item xs={12} md={6}>
+        {(racks.length ===0)?
+        <Grid item xs={12}>
                 <CircularProgress className={classes.progress}/>
          </Grid>
          :
