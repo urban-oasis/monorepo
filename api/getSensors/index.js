@@ -37,7 +37,6 @@ app.get('/', [
         return next()
     }
     console.log(req.query)
-
     if ('fromUtc' in req.query && 'toUtc' in req.query) {
         const fromUtc = datetime.create(req.query.fromUtc)._now
         const toUtc = datetime.create(req.query.toUtc)._now
