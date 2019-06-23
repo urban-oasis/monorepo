@@ -22,18 +22,18 @@ const styles = theme => ({
 
 class App extends Component {
   render () {
-    window.localStorage.setItem('access_token', 'OEU@3o-4234JE-32Ujeo?@!');
+    //window.localStorage.setItem('access_token', 'OEU@3o-4234JE-32Ujeo?@!');
     const { classes } = this.props
     return (
       <Router>
         <div className={classes.root}>
           <CssBaseline />
           <Switch>
+            <Route path='/login' component={Login} />
             <ProtectedRoute path='/' exact component={FarmsList} />
             <ProtectedRoute path='/farms/:farm_id' component={RacksList} />
             <ProtectedRoute path='/racks/:rack_id' exact component={SensorsOverview} />
             <ProtectedRoute path='/users' exact component={AddUser} />
-            <Route path='/login' component={Login} />
           </Switch>
         </div>
       </Router>

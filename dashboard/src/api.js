@@ -1,7 +1,7 @@
 import forge from 'mappersmith'
 import EncodeJson from 'mappersmith/middleware/encode-json'
 import TimeoutMiddleware from 'mappersmith/middleware/timeout'
-const Timeout = TimeoutMiddleware(5000)
+const Timeout = TimeoutMiddleware(20000)
 
 const AuthMiddleware = () => ({
   request (request) {
