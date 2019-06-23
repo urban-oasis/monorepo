@@ -9,6 +9,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import SendIcon from '@material-ui/icons/Send';
+import InsertChart from '@material-ui/icons/InsertChart';
+import Event from '@material-ui/icons/Event';
+import AccessTime from '@material-ui/icons/AccessTime';
+import Settings from '@material-ui/icons/Settings';
+
+
 
 const styles = theme => ({
   menuItem: {
@@ -19,37 +25,64 @@ const styles = theme => ({
       },
     },
   },
+  root:{
+       backgroundColor: theme.palette.primary.main
+  },
   primary: {},
   icon: {},
 });
 
 function SideMenu(props) {
-  const { classes } = props;
+  const { classes ,theme} = props;
+
 
   return (
-    //   <div style={{backgroundColor: "red", height: '100%'}}>
+      // <div className={classes.root} >
       <MenuList
         color='primary'>
-        <MenuItem className={classes.menuItem}>
+        {/* <MenuItem className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>
-            <SendIcon />
+            <SendIcon color='secondary'/>
           </ListItemIcon>
-          {/* <ListItemText classes={{ primary: classes.primary }} inset primary="Sent mail" /> */}
         </MenuItem>
         <MenuItem className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>
-            <DraftsIcon />
+            <DraftsIcon color='secondary'/>
           </ListItemIcon>
-          {/* <ListItemText classes={{ primary: classes.primary }} inset primary="Drafts" /> */}
         </MenuItem>
         <MenuItem className={classes.menuItem}>
           <ListItemIcon className={classes.icon}>
-            <InboxIcon />
+            <InboxIcon color='secondary'/>
+          </ListItemIcon>
+        </MenuItem> */}
+        <MenuItem className={classes.menuItem}>
+          <ListItemIcon className={classes.icon}>
+            <InsertChart color='secondary' />
+          </ListItemIcon>
+          {/* <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" /> */}
+        </MenuItem>
+        <MenuItem className={classes.menuItem}>
+          <ListItemIcon className={classes.icon}>
+            <Event color='secondary' />
+          </ListItemIcon>
+          {/* <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" /> */}
+        </MenuItem>
+        <MenuItem className={classes.menuItem}>
+          <ListItemIcon className={classes.icon}
+          >
+            <AccessTime color='secondary' />
+          </ListItemIcon>
+          {/* <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" /> */}
+        </MenuItem>
+        <MenuItem className={classes.menuItem}>
+          <ListItemIcon className={classes.icon}
+          >
+            <Settings color='secondary' />
           </ListItemIcon>
           {/* <ListItemText classes={{ primary: classes.primary }} inset primary="Inbox" /> */}
         </MenuItem>
       </MenuList>
-    //   </div>
+      // </div>
   );
 }
 
