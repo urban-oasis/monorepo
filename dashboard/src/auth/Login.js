@@ -9,6 +9,7 @@ import {
   CardActionArea,
   CardActions,
   Button,
+  TextField,
 Paper,
 Grid} from '@material-ui/core/'
 
@@ -19,11 +20,12 @@ const CLIENT_ID = '385555121987-n51lgjatf4olrohh10540j8k034f1098.apps.googleuser
 const styles = theme => ({
   root: {
     maxWidth: 560,
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
     height: '50vh',
+    // borderStyle: 'solid',
   
     // backgroundColor: "blue",
   },
@@ -47,7 +49,8 @@ const styles = theme => ({
     height: 200,
     width: 300,
     backgroundSize: 'contain',
-    margin: 40,
+    margin:'40px 40px 0 40px',
+    position: 'relative'
   },
   paper: {
     //marginTop: theme.spacing.unit * 8,
@@ -62,12 +65,21 @@ const styles = theme => ({
     paddingTop: '56.25%', // 16:9
   },
   button:{
-    marginBottom: 20,
-    padding: 5,
+    width: '100%',
+    marginTop: '16px'
+    // marginLeft:'16px'
+// : 5,
   },
 })
 
 class Login extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+       password: null,
+       email: null
+    }
+  }
   onAuthSuccess = async googleResponse => {
     const sessionResponse = await api.Session.create({ body: { tokenId: googleResponse.tokenId } })
     if (sessionResponse.success()) {
@@ -78,23 +90,84 @@ class Login extends Component {
     }
   }
 
+  onLoginSuccess =()=>{
+    const {email} = this.state;
+    if (email.includes('@urbanoasis.life')){
+    window.localStorage.setItem('access_token', 'OEU@3o-4234JE-32Ujeo?@!');
+    this.props.history.push('/');
+  }
+
+  }
+
   onAuthFailure = response => {
     console.log(response)
     alert('Something went wrong. Talk to the tech team.')
   }
+  responseGoogle = (response) => {
+    console.log("..2",response);
+  }
 
   render () {
     const { classes } = this.props
+    const {password, email} = this.state;
+    const emailIsValid = !(email? email.includes('@'): false)   
+    const passwordIsValid = !(password? password.length>6: false)
+  
     return (
       <div className={classes.root}>
       {/* <Card className={classes.card}> */}
       <div className={classes.logo}></div>
-      <GoogleLogin
-        className={classes.button}
-        clientId={CLIENT_ID}
-        buttonText='Login'
-        onSuccess={this.onAuthSuccess}
-        onFailure={this.onAuthFailure}/> 
+      <TextField
+      required
+      error={emailIsValid}
+          id="outlined-full-width"
+          label="Email"
+          // style={{ margin: 8 }}
+          placeholder="Enter your email"
+          // helperText="Full width!"
+          value = {email}
+          onChange = {event =>(this.setState({email: event.target.value}))}
+          fullWidth
+          margin="normal"
+          variant="outlined"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            required:true
+          }}
+        />
+      <TextField
+      required
+      error={passwordIsValid}
+          id="outlined-full-width"
+          label="Password"
+          // style={{ margin: 8 }}
+          placeholder="Enter your password"
+          value={password}
+          // helperText="Full width!"
+          fullWidth
+          onChange = {event =>(this.setState({password: event.target.value}))}
+          margin="normal"
+          variant="outlined"
+          type="password"
+          autoComplete="current-password"
+          InputLabelProps={{
+            shrink: true,
+          }}  
+          InputProps={{
+            required:true
+          }}
+        />
+        <div style={{display:'flex', justifyContent:'center'}}>
+         <Button className={classes.Button}
+         onClick={this.onLoginSuccess}
+         variant="contained"
+          color="primary" 
+          className={classes.button}>
+        Login
+      </Button>
+      </div>
       {/* </Card> */}
       </div>
     )
