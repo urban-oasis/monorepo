@@ -9,6 +9,18 @@ OBS! The dashboard login implementation is only "Proof of concept". It offers _n
 
 ### Running locally
 
+To get the code, go to [github](https://github.com/urban-oasis/monorepo) and clone the repo by pressing the `Clone or Download` button and copy the url. Then in your terminal write:
+```
+git clone https://github.com/urban-oasis/monorepo.git
+cd monorepo
+```
+
+When coming back to the project, you can check if there are any updates to the code by `cd` into `monorepo` and do
+```
+git pull
+```
+
+This will fetch the latest updates, if there are any.  
 To launch the dashboard, move into the dashboard directory and do:
 
 1. `npm install`
