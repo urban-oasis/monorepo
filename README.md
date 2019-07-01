@@ -5,6 +5,7 @@ This is the Urban Oasis IoT project containing a React dashboard, sensor collect
 ## Dashboard
 
 The dashboard is written in React and uses Google cloud as a backend to read and write sensor data.  
+OBS! The dashboard login implementation is only "Proof of concept". It offers _no_ security and should not be deployed to a public environment where people can hack their way through.
 
 ### Running locally
 
