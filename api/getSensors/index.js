@@ -17,6 +17,21 @@ const storage = new Storage()
 const bucket = storage.bucket(BUCKET)
 const time = datetime.create()._now
 
+const daysInMonth = {
+    '1': 31,
+    '2': 28,
+    '3': 31,
+    '4': 30,
+    '5': 31,
+    '6': 30,
+    '7': 31,
+    '8': 31,
+    '9': 30,
+    '10': 31,
+    '11': 30,
+    '12': 31
+}
+
 async function getData(files) {
     data = []
     for (const filePath of files) {
@@ -38,6 +53,7 @@ app.get('/', [
     }
     console.log(req.query)
     if ('fromUtc' in req.query && 'toUtc' in req.query) {
+        console.log('getting data')
         const fromUtc = datetime.create(req.query.fromUtc)._now
         const toUtc = datetime.create(req.query.toUtc)._now
         if (fromUtc.toString() === 'Invalid Date' || toUtc.toString() === 'Invalid Date') {
@@ -56,17 +72,33 @@ app.get('/', [
             }
         } else {
             var files = []
+            index = 0
             for (var month = fromUtc.getMonth(); month <= toUtc.getMonth(); month++) {
-                for (var day = fromUtc.getUTCDate(); day <= toUtc.getUTCDate(); day++) {
-                    var options = {
-                        prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${month + 1}/day=${day}/`
+                if (index === 0) {
+                    for (var day = fromUtc.getUTCDate(); day <= Number(daysInMonth[String(month+1)]); day++) {
+                        var options = {
+                            prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${month + 1}/day=${day}/`
+                        }
+                        var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
+                        for (var i = 0; i < filesInDay.length; i++) {
+                            files.push(filesInDay[i].name)
+                        }
                     }
-                    var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
-                    for (var i = 0; i < filesInDay.length; i++) {
-                        files.push(filesInDay[i].name)
+                } else {
+                    for (var day = 1; day <= toUtc.getUTCDate(); day++) {
+                        var options = {
+                            prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${month + 1}/day=${day}/`
+                        }
+                        var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
+                        for (var i = 0; i < filesInDay.length; i++) {
+                            files.push(filesInDay[i].name)
+                        }
                     }
                 }
+                
+                index += 1
             }
+            index = 0
         }
     } else {
         var files = []
@@ -83,6 +115,8 @@ app.get('/', [
     
     console.log(files)
     const data = await getData(files)
+    console.log('----------')
+    console.log(data)
     res.status(200).send(data)
 })
 
