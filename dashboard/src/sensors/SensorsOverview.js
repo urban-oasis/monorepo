@@ -59,13 +59,11 @@ class SensorsOverview extends Component {
       history.push('/')
     else {
       var startTime = dt.create()
-      startTime.offsetInDays(-3)
+      startTime.offsetInDays(-2)
       const fromUtc = startTime._now.toISOString()
       const toUtc = dt.create()._now.toISOString()
       const rackData = historyLocation.state.data
-      console.log('-----------------')
-      console.log(fromUtc)
-      console.log(toUtc)
+      console.log('--- Getting data ---')
       const response = await api.Sensors.all({
         farm: rackData.farm_id,
         rack: rackData.id,
@@ -73,6 +71,7 @@ class SensorsOverview extends Component {
         toUtc: toUtc
       })
       const parsedResponse = JSON.parse(response.responseData)
+      console.log('-----------------')
       console.log(parsedResponse)
       this.setState({ sensors: parsedResponse })
       let formData = {
@@ -111,7 +110,7 @@ class SensorsOverview extends Component {
   createPlots = () => {
     const { formData } = this.state
     const { classes } = this.props
-    console.log("creating plots")
+    //console.log("creating plots")
     let plots = DISPLAY_KPIS.map(kpi =>
 
       <Grid key={kpi} item xs={12} md={6}
@@ -136,13 +135,7 @@ class SensorsOverview extends Component {
   render() {
     const { history, classes } = this.props
     const { sensors, formData } = this.state;
-    //const { } = this.state
     const plots = this.createPlots()
-    // console.log("hos plot looks")
-    // console.log(plots)
-    console.log("Sensor")
-    console.log(sensors.length)
-    console.log(formData)
 
     return (
       <div className={classes.root}>
