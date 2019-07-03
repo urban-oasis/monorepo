@@ -60,7 +60,6 @@ app.get('/', [
             res.status(400).send('Invalid date format')
             return next()
         }
-        
         if (fromUtc.getMonth() === toUtc.getMonth() && fromUtc.getUTCDate() === toUtc.getUTCDate()) {
             var files = []
             var options = {
@@ -69,6 +68,19 @@ app.get('/', [
             var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
             for (var i = 0; i < filesInDay.length; i++) {
                 files.push(filesInDay[i].name)
+            }
+        } else if (fromUtc.getMonth() === toUtc.getMonth() && !(fromUtc.getUTCDate() === toUtc.getUTCDate())) {
+            var files = []
+            for (var month = fromUtc.getMonth(); month <= toUtc.getMonth(); month++) {
+                for (var day = fromUtc.getUTCDate(); day <= toUtc.getUTCDate(); day++) {
+                    var options = {
+                        prefix: `farm=${req.query.farm}/rack=${req.query.rack}/year=${fromUtc.getFullYear()}/month=${month + 1}/day=${day}/`
+                    }
+                    var [filesInDay] = await storage.bucket(BUCKET).getFiles(options)
+                    for (var i = 0; i < filesInDay.length; i++) {
+                        files.push(filesInDay[i].name)
+                    }
+                }
             }
         } else {
             var files = []
